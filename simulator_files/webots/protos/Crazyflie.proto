@@ -8,7 +8,7 @@ PROTO Crazyflie [
   field SFVec3f    translation     0 0 0.015   # Is `Transform.translation`.
   field SFRotation rotation        0 0 1 0     # Is `Transform.rotation`.
   field SFString   name            "Crazyflie" # Is `Solid.name`.
-  field SFString   controller      "crazyflie_controller_c" # Is `Robot.controller`.
+  field SFString   controller      "crazyflie_controller_py" # Is `Robot.controller`.
 #  field SFString   controller      "crazyflie" # Is `Robot.controller`.
   field MFString   controllerArgs  []          # Is `Robot.controllerArgs`.
   field SFString   window          "<generic>" # Is `Robot.window`.
@@ -32,7 +32,7 @@ PROTO Crazyflie [
     translation 0 0 0.015
     children [
       DEF BODY Transform {
-        translation 0 0 -0.015
+        translation 0 0 0.002
         children [
           Group {
             children IS extensionSlot
@@ -95,7 +95,7 @@ PROTO Crazyflie [
       }
       DEF M1 Propeller {
         shaftAxis 0 0 1
-        centerOfThrust 0.031 -0.031 0.008
+        centerOfThrust 0.031 -0.031 0.006
         thrustConstants -4e-05 0
         torqueConstants 2.4e-06 0
         fastHelixThreshold 50
@@ -105,7 +105,7 @@ PROTO Crazyflie [
           maxTorque 30
         }
         fastHelix Solid {
-          translation 0.031 -0.031 0.008
+          translation 0.031 -0.031 0.006
           children [
             DEF FASTHELIX Shape {
               appearance PBRAppearance {
@@ -125,7 +125,7 @@ PROTO Crazyflie [
           ]
         }
         slowHelix Solid {
-          translation 0.031 -0.031 0.008
+          translation 0.031 -0.031 0.006
           children [
             DEF PROP_SHAPE Shape {
               appearance DEF PLASTIC PBRAppearance {
@@ -143,7 +143,7 @@ PROTO Crazyflie [
       }
       DEF M2 Propeller {
         shaftAxis 0 0 1
-        centerOfThrust -0.031 -0.031 0.008
+        centerOfThrust -0.031 -0.031 0.006
         thrustConstants 4e-05 0
         torqueConstants 2.4e-06 0
         fastHelixThreshold 50
@@ -153,13 +153,13 @@ PROTO Crazyflie [
           maxTorque 30
         }
         fastHelix Solid {
-          translation -0.031 -0.031 0.008
+          translation -0.031 -0.031 0.006
           children [
             USE FASTHELIX
           ]
         }
         slowHelix Solid {
-          translation -0.031 -0.031 0.008
+          translation -0.031 -0.031 0.006
           children [
             USE PROP_SHAPE
           ]
@@ -167,7 +167,7 @@ PROTO Crazyflie [
       }
       DEF M3 Propeller {
         shaftAxis 0 0 1
-        centerOfThrust -0.031 0.031 0.008
+        centerOfThrust -0.031 0.031 0.006
         thrustConstants -4e-05 0
         torqueConstants 2.4e-06 0
         fastHelixThreshold 50
@@ -177,13 +177,13 @@ PROTO Crazyflie [
           maxTorque 30
         }
         fastHelix Solid {
-          translation -0.031 0.031 0.008
+          translation -0.031 0.031 0.006
           children [
             USE FASTHELIX
           ]
         }
         slowHelix Solid {
-          translation -0.031 0.031 0.008
+          translation -0.031 0.031 0.006
           children [
             USE PROP_SHAPE
           ]
@@ -191,7 +191,7 @@ PROTO Crazyflie [
       }
       DEF M4 Propeller {
         shaftAxis 0 0 1
-        centerOfThrust 0.031 0.031 0.008
+        centerOfThrust 0.031 0.031 0.006
         thrustConstants 4e-05 0
         torqueConstants 2.4e-06 0
         fastHelixThreshold 50
@@ -201,7 +201,7 @@ PROTO Crazyflie [
           maxTorque 30
         }
         fastHelix Solid {
-          translation 0.031 0.031 0.008
+          translation 0.031 0.031 0.006
           children [
             USE FASTHELIX
           ]
