@@ -16,3 +16,8 @@ Check out the [Bitcraze crazyflie-simulation documentation](https://www.bitcraze
 ## Contribute
 
 Go to the [contribute page](https://www.bitcraze.io/development/contribute/) on our website to learn more.
+------------------
+## Webots - Python Controller - Plot Enabling
+- To enable the real time plotting:
+    1. Ensure python controller is selected in the robot controller.
+    2. in the `customData` field, specify the `enablePlot:True` or `enablePlot:False`.
