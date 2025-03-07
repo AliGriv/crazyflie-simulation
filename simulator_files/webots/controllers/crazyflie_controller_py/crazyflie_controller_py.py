@@ -91,37 +91,43 @@ if __name__ == '__main__':
     height_desired = FLYING_ATTITUDE
 
     # Realtime Plotting
+    ## Read the customData field
+    custom_data = robot.getCustomData()
+
+    ## Extract enablePlot from customData
+    enable_plot = "enablePlot:TRUE" in custom_data  # Check if plotting is enabled
     ## Data storage
     time_data, position_data = [], [[],[],[]]
     start_time = robot.getTime()
 
-    ## Setup Matplotlib figure
-    fig, ax = plt.subplots()
-    ax.set_xlabel('Time (s)')
-    ax.set_ylabel('Position (m)')
+    if enable_plot:
+        ## Setup Matplotlib figure
+        fig, ax = plt.subplots()
+        ax.set_xlabel('Time (s)')
+        ax.set_ylabel('Position (m)')
 
-    ## Define axis labels and create plots dynamically
-    axes_labels = ['X', 'Y', 'Altitude']
-    lines = {label: ax.plot([], [], label=label)[0] for label in axes_labels}
-    ax.legend()
-    ax.grid()
+        ## Define axis labels and create plots dynamically
+        axes_labels = ['X', 'Y', 'Altitude']
+        lines = {label: ax.plot([], [], label=label)[0] for label in axes_labels}
+        ax.legend()
+        ax.grid()
 
-    ## Function to update the plot
-    def update_plot(frame):
-        if time_data:
-            for i, label in enumerate(axes_labels):
-                lines[label].set_xdata(time_data)
-                lines[label].set_ydata(position_data[i])
+        ## Function to update the plot
+        def update_plot(frame):
+            if time_data:
+                for i, label in enumerate(axes_labels):
+                    lines[label].set_xdata(time_data)
+                    lines[label].set_ydata(position_data[i])
 
-            ax.relim()
-            ax.autoscale_view()
+                ax.relim()
+                ax.autoscale_view()
 
-    ## Start animation (runs in the main thread)
-    ani = animation.FuncAnimation(fig, update_plot, interval=100)
+        ## Start animation (runs in the main thread)
+        ani = animation.FuncAnimation(fig, update_plot, interval=100)
 
-    ## Show plot in non-blocking mode
-    plt.ion()
-    plt.show()
+        ## Show plot in non-blocking mode
+        plt.ion()
+        plt.show()
 
     print("\n");
 
@@ -207,16 +213,18 @@ if __name__ == '__main__':
         past_x_global = x_global
         past_y_global = y_global
 
-        pos = gps.getValues()
+        
 
-        # Store data
-        time_data.append(robot.getTime())
-        for i, point in enumerate(pos):
-            position_data[i].append(point)
+        if enable_plot:
+            # Store data
+            pos = gps.getValues()
+            time_data.append(robot.getTime())
+            for i, point in enumerate(pos):
+                position_data[i].append(point)
 
-        # Prevent infinite memory usage
-        if len(time_data) > 10e5:
-            time_data.pop(0)
-            position_data.pop(0)    
+            # Prevent infinite memory usage
+            if len(time_data) > 10e5:
+                time_data.pop(0)
+                position_data.pop(0)    
 
-        plt.pause(0.01)  # Allow Matplotlib to update
+            plt.pause(0.01)  # Allow Matplotlib to update
